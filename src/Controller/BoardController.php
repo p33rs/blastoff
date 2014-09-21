@@ -87,5 +87,5 @@ class BoardController
     {
         return new Board($board);
     }
-    
+
 }

@@ -4,13 +4,9 @@ Before Chrome started autogenerating homepages for users, you were stuck with us
 
 This coad allows you to easily customize a list of links for you to use as your browser's homepage. Your blastoff homepage is password-protected and stored as a JSON file, so no database is necessary.
 
-## Installation
+## Preview
 
-Install on a working PHP server. Should work right out the box.
+An earlier working version of this may be found here:
+http://jonpierce.net/p/blastoff/?board=1-iamrad
 
-## Todo
-
-Haven't touched this since I wrote it years ago. Could use some cleanup.
-* Get dependency management running - likely under Composer - so that we don't have to include a bunch of jQuery assets in the repo
-* Better autoloading
-* JS Refactor
+The code here is mid-refactor and won't work in its current state.
