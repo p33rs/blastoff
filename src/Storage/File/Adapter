@@ -1,0 +1,89 @@
+<?php
+namespace p33rs\Blastoff\Storage\File;
+use p33rs\Blastoff\Storage\StorageInterface;
+/** Store arbitrary records as json files */
+class Adapter implements StorageInterface {
+
+    private $path;
+    const CFG_STORAGE_DIR = 'fileDirectory';
+    const SUFFIX = '.json';
+
+    public function __construct() {
+        $this->path = Config::get(self::CFG_STORAGE_DIR);
+    }
+
+    /**
+     * @param $id
+     * @return array|mixed
+     * @throws Exception
+     */
+    public function load($id) {
+        $path = $this->path . '/' . $id . self::SUFFIX;
+        if (!is_readable($path)) {
+            throw new Exception('File not found.');
+        };
+        $result = json_decode(file_get_contents($path), true);
+        if (json_last_error() !== JSON_ERROR_NONE) {
+            throw new Exception('File was corrupted');
+        }
+        return $result + ['id' => $id];
+    }
+
+    /**
+     * Create a new record.
+     * If an ID key exists in $data, it should be ignored.
+     * @param array $data
+     * @return string The ID of the new record.
+     */
+    public function create(array $data) {
+        $id = $this->generateId();
+        $this->write($id, $data);
+        return $id;
+    }
+
+    /**
+     * Update existing record.
+     * If the ID key exists in $data, it should be ignored.
+     * @param $id
+     * @param array $data
+     * @return this
+     */
+    function update($id, array $data) {
+        $this->write($id, $data);
+        return $this;
+    }
+
+    /**
+     * @param $id
+     * @param $data
+     * @throws Exception
+     */
+    private function write($id, array $data) {
+        $path = $this->path . '/' . $id . self::SUFFIX;
+        if (!is_writable($this->path) && !is_writable ($path)) {
+            throw new Exception('Couldn\'t save object.');
+        }
+        unset($data['id']);
+        $result = file_put_contents($path, json_encode($data));
+        if (!$result) {
+            throw new Exception('Couldn\'t save object.');
+        }
+    }
+
+    /**
+     * Generate a fresh ID.
+     * In this adapter, IDs are also filenames.
+     * @return string
+     */
+    private function generateId() {
+        $alphabet = 'abcdefghijklmnopqrstuvwxyz';
+        $string = '';
+        for ($x = 0; $x < 6; $x++) {
+            $string .= $alphabet[mt_rand(0, 25)];
+        }
+        $glob = $this->path . '/*' . self::SUFFIX;
+        $number = count(glob($glob)) + 1;
+        return $number . '-' . $string;
+    }
+
+}
