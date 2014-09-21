@@ -26,16 +26,24 @@ module.exports = function(grunt) {
                 }
             }
         },
+        dust: {
+            defaults: {
+                files: {
+                    "js/dist/templates.js": "templates/*.dust"
+                }
+            }
+        },
         watch: {
-            files: ['<%= concat.vendor.src %>', '<%= concat.dist.src %>'],
-            tasks: ['concat', 'uglify']
+            files: ['<%= concat.vendor.src %>', '<%= concat.dist.src %>', 'templates/*.dust'],
+            tasks: ['concat', 'uglify', 'dust']
         }
     });
 
     grunt.loadNpmTasks('grunt-contrib-concat');
     grunt.loadNpmTasks('grunt-contrib-uglify');
     grunt.loadNpmTasks('grunt-contrib-watch');
+    grunt.loadNpmTasks('grunt-dust');
 
-    grunt.registerTask('default', ['concat', 'uglify', 'watch']);
+    grunt.registerTask('default', ['concat', 'uglify', 'dust', 'watch']);
 
 };

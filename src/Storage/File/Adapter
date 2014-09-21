@@ -14,7 +14,7 @@ class Adapter implements StorageInterface {
 
     /**
      * @param $id
-     * @return array|mixed
+     * @return array
      * @throws Exception
      */
     public function load($id) {
@@ -23,7 +23,7 @@ class Adapter implements StorageInterface {
             throw new Exception('File not found.');
         };
         $result = json_decode(file_get_contents($path), true);
-        if (json_last_error() !== JSON_ERROR_NONE) {
+        if (json_last_error() !== JSON_ERROR_NONE || !$result || !is_array($result)) {
             throw new Exception('File was corrupted');
         }
         return $result + ['id' => $id];

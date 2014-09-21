@@ -1,0 +1,12 @@
+<?php
+return [
+    'storageAdapter' => 'File\\Adapter',
+    'authAdapter' => 'Auth\\Simple',
+    'fileStoragePath' => __DIR__ . '/boards/'
+    // these are currently unused.
+    'storageUrl' => '127.0.0.1',
+    'storageUser' => '',
+    'storagePass' => '',
+    'storageName' => '',
+    'storagePort' => '',
+];

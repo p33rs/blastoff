@@ -3,3 +3,4 @@ boards/*
 .idea
 vendor
 js/dist/*
+*.local.php
