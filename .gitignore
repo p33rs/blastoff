@@ -1,1 +1,3 @@
 boards/*
+!boards/1-iamrad.json
+.idea
