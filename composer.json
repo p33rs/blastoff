@@ -11,11 +11,13 @@
     ],
     "require": {
         "php": ">=5.4.0",
+        "components/jquery": "dev-master",
+        "components/jqueryui": "dev-master"
     },
     "config" : {
         "component-dir": "vendor"
     },
     "autoload": {
-        "psr-4": { "p33rs\\Blastoff": "src/" }
+        "psr-4": { "p33rs\\Blastoff\\": "src/" }
     }
 }
